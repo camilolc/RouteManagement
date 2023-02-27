@@ -1,39 +1,43 @@
-import React, { useState } from "react";
+import React, {
+  createContext,
+  ReactElement,
+  useContext,
+  useState,
+} from "react";
 import styles from "../styles/styles.module.css";
 
-import noImage from "../assets/no-image.jpg";
 import { useProduct } from "../hooks/useProduct";
 
-interface Props {
-  product: Product;
-}
+import {
+  ProductCardProps,
+  Product,
+  ProductContextProps,
+} from "../interfaces/interfaces";
+import { ProductTitle } from "./ProductTitle";
+import { ProductImage } from "./ProductImage";
+import { ProductButtons } from "./ProductButtons";
 
-interface Product {
-  id: string;
-  title: string;
-  img?: string;
-}
+//Context
+export const ProductContext = createContext({} as ProductContextProps);
+const { Provider } = ProductContext;
 
-export const ProductCard = ({ product }: Props) => {
+export const ProductCard = ({ children, product }: ProductCardProps) => {
   const { counter, increaseBy } = useProduct();
   return (
-    <div>
-      <h1 className={styles.productCard}>
-        <img
-          className={styles.productImg}
-          src={product.img ? product.img : noImage}
-        ></img>
-        <span className={styles.productDescription}>{product.title}</span>
-        <div className={styles.buttonsContainer}>
-          <button className={styles.buttonMinus} onClick={() => increaseBy(-1)}>
-            -
-          </button>
-          <div className={styles.countLabel}>{counter}</div>
-          <button className={styles.buttonAdd} onClick={() => increaseBy(1)}>
-            +
-          </button>
-        </div>
-      </h1>
-    </div>
+    <Provider
+      value={{
+        counter,
+        increaseBy,
+        product,
+      }}
+    >
+      <div className={styles.productCard}>
+        {children}
+        {/* <ProductImage img={product.img} />
+      <ProductTitle title={product.title} />
+      <h1 className={styles.productCard}></h1>
+      <ProductButtons counter={counter} increaseBy={increaseBy} /> */}
+      </div>
+    </Provider>
   );
 };

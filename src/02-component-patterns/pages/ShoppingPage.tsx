@@ -1,7 +1,14 @@
 import React from "react";
-import { ProductCard } from "../components/ProductCard";
+import {
+  ProductButtons,
+  ProductCard,
+  ProductImage,
+  ProductTitle,
+} from "../components/";
+import { useProduct } from "../hooks/useProduct";
 
 export const ShoppingPage = () => {
+  const { counter, increaseBy } = useProduct();
   const product = {
     id: "1",
     title: "Coffe Mug - Card",
@@ -18,7 +25,17 @@ export const ShoppingPage = () => {
           flexWrap: "wrap",
         }}
       >
-        <ProductCard product={product} />
+        <ProductCard product={product}>
+          <ProductCard.Image />
+          <ProductCard.Title title="" />
+          <ProductCard.Buttons />
+        </ProductCard>
+
+        <ProductCard product={product}>
+          <ProductImage />
+          <ProductTitle />
+          <ProductButtons />
+        </ProductCard>
       </div>
     </div>
   );
