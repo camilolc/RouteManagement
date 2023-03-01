@@ -19,3 +19,9 @@
 	border-color: #FFFFFF;
 	color: #FFFFFF;
 }
+
+.shopping-cart{
+	position: fixed;
+	top: 0;
+	right: 10px;
+}
